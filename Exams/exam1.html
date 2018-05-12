@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="gr__bead_inf_elte_hu"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8"><title>BE-AD Assignment Management System</title><link rel="shortcut icon" href="https://bead.inf.elte.hu/icon.ico"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content=""><meta name="author" content=""><script src="exam1_files/jquery.js"></script><link type="text/css" href="exam1_files/jquery-ui.css" rel="stylesheet"><script src="exam1_files/jquery-ui.js"></script><script src="exam1_files/moment.js"></script><link type="text/css" href="exam1_files/bootstrap.css" rel="stylesheet"><link type="text/css" href="exam1_files/bootstrap_002.css" rel="stylesheet"><script src="exam1_files/bootstrap.js"></script><link type="text/css" href="exam1_files/bootstrap-datetimepicker.css" rel="stylesheet"><script src="exam1_files/bootstrap-datetimepicker.js"></script><script src="exam1_files/DynamicContents.js"></script><link type="text/css" href="exam1_files/katex.css" rel="stylesheet"><script src="exam1_files/katex.js"></script><script>window.onload = function(){ var mathElements = document.getElementsByClassName("math"); for (var i=0; i < mathElements.length; i++) { var texText = mathElements[i].firstChild; katex.render(texText.data, mathElements[i]); }}</script></head><body data-gr-c-s-loaded="true"><div class="navbar navbar-default navbar-fixed-top"><style>.body{padding-top:70px}</style><div class="container"><div class="navbar-header"><a href="https://bead.inf.elte.hu/home" class="navbar-brand">BE-AD</a><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="collapse navbar-collapse navbar-ex1-collapse"><ul class="nav navbar-nav navbar-right"><li><a>NIQWQX / NIQWQX</a></li><li><a href="https://bead.inf.elte.hu/notifications" id="link-notifications">Notifications (7)</a></li><li><a href="https://bead.inf.elte.hu/profile" id="link-profile">Profile</a></li><li><a href="https://bead.inf.elte.hu/logout" id="link-logout">Logout</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="page-header"><h2>Submission</h2></div></div></div><div class="row"><div class="col-md-12"><table class="table table-bordered table-condensed table-hover table-striped"><tbody><tr><td><b>Course: </b></td><td>Functional languages (MSc) - IPM-13feszFUNLEG</td></tr><tr><td><b>Teacher: </b></td><td>Bozo Istvan, Kaposi Ambrus, Poór Artúr</td></tr><tr><td><b>Assignment: </b></td><td>Midterm exam</td></tr><tr><td><b>Deadline: </b></td><td>2018-03-23, 15:50:00</td></tr><tr><td><b>Time left: </b></td><td><a id="ctd">Deadline is reached</a><script>ctdcountdown();function ctdcountdown() {var minsecs = 60;var hoursecs = minsecs * 60;var daysecs = hoursecs* 24;var mstime = -4304599 * 1000;var timestamp = new Date;var interval = setInterval(function() {var el = document.getElementById("ctd");var now = new Date;var dt = now - timestamp;timestamp = now;mstime = mstime - dt;var time = Math.round( mstime / 1000 );if(time < 0) {el.innerHTML = "Deadline is reached";clearInterval(interval);return;}var edays   = Math.floor( time / daysecs );var ehours1 = time % daysecs;var ehours  = Math.floor( ehours1 / hoursecs );if (ehours < 10) ehours = "0" + ehours;var emins1  = ehours1 % hoursecs;var emins   = Math.floor( emins1 / minsecs );if (emins < 10) emins = "0" + emins;var esecs   = emins1 % minsecs;if (esecs < 10) esecs = "0" + esecs;var text="";if(edays == 0) {if(ehours == 0) {text = emins + ':' + esecs;} else {text = ehours + ':' + emins + ':' + esecs;}} else {text = edays + " day(s) " + ehours + ':' + emins + ':' + esecs;}el.innerHTML = text;}, 1000);}</script></td></tr></tbody></table></div></div><div class="row"><div class="col-md-12"><div class="alert alert-danger"><p>Deadline is reached.</p></div></div></div><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="row"><div class="col-md-12"><div class="list-group" style="max-height: 168px; overflow: auto;"><a href="https://bead.inf.elte.hu/submission-details?asg-key=80&amp;submission-key=2905" class="list-group-item">2018-03-23, 15:45:59<span class="badge" style="background-color: #5cb85c;">Accepted</span></a></div></div></div></div></div><div class="row"><div class="col-md-12"><h2>Description</h2><div style="margin-left:0px; background: lightgray"><p>In this exam you will define parts of a snake game. A snake consists of a list of <code>(x, y)</code>
+ coordinates where it is situated, a direction in which it is going and a
+ maximal length of the snake. You will implement how the snake goes 
+ahead in its direction how it turns (changes direction).</p>
+<p>If you have any questions, ask the teachers.</p>
+<p>At the end of the exercise there is a starting code that you can copy
+ and paste into an empty file. Then, the task of this exam is to replace
+ all the lines which have <code>undefined</code> with real definitions. There is automatic testing for the solutions when you upload them.</p>
+<p>A position is a pair of <code>(x, y)</code> coordinates.</p>
+<pre><code>type Position = (Int, Int)</code></pre>
+<p>A direction of a snake is a function where the input is a <code>Position</code> and the output is also a <code>Position</code>.</p>
+<pre><code>type Dir = Position -&gt; Position</code></pre>
+<p>A snake is defined as a triple: a direction, a list of positions (the
+ head of the list is the head of the snake) and an integer which is the 
+maximal length of the snake.</p>
+<pre><code>type Snake = (Dir, [Position], Int)</code></pre>
+<h1 id="directions-3-points">Directions (3 points)</h1>
+<p>You have to define the four possible directions in which the snake can go. The <code>west</code> direction was defined for you as an example: because the snake goes West, the <code>x</code> coordinate is decreased by <code>1</code>. Each direction is given as one step of the snake in the corresponding direction.</p>
+<pre><code>west, east, north, south :: Dir
+west  (x,y) = (x-1,y)
+east  = undefined
+north = undefined
+south = undefined</code></pre>
+<p>After you have given the definitions of <code>east</code>, <code>north</code> and <code>south</code>, the list <code>testDirs</code> should only have <code>True</code> elements. This tests whether your definition is good.</p>
+<pre><code>testDirs :: [Bool]
+testDirs = [ south (0,0) == (0,-1)
+           , east  (3,3) == (4,3)
+           , north (3,2) == (3,3)
+           , west  (2,2) == (1,2)
+           , east (west (0,0)) == (0,0)
+           , north (west (0,0)) == (-1,1)
+           ]</code></pre>
+<h1 id="checking-directions-3-points">Checking directions (3 points)</h1>
+<p>Given a direction <code>d</code>, <code>isWest d</code> returns <code>True</code> if <code>d</code> is the West direction. To check this, you should apply <code>d</code> to <code>(0,0)</code> and check what the result is. If the first component of the result is <code>-1</code> and the second component is <code>0</code>, you know that the direction was West.</p>
+<p>Similarly for the other directions.</p>
+<p>We have given the first one for you as an example.</p>
+<pre><code>isWest, isEast, isNorth, isSouth :: Dir -&gt; Bool
+isWest  d = fst (d (0,0)) == (-1) &amp;&amp; snd (d (0,0)) == 0
+isEast  = undefined
+isNorth = undefined
+isSouth = undefined</code></pre>
+<p>We also have tests for these.</p>
+<pre><code>testIsDirs :: [Bool]
+testIsDirs = [ isWest  west
+             , isEast  east
+             , isNorth north
+             , isSouth south
+             , not (isWest south)
+             , not (isNorth west)
+             , not (isEast west)
+             , not (isSouth east)
+             , not (isSouth west)
+             , not (isSouth north)
+             ]</code></pre>
+<h1 id="equality-of-directions-3-points">Equality of directions (3 points)</h1>
+<p>You can test if two directions are equal. You can do this by applying
+ both of them to the same position and check if the results are equal 
+(using <code>(==)</code>).</p>
+<pre><code>eqDir :: Dir -&gt; Dir -&gt; Bool
+eqDir = undefined</code></pre>
+<p>Tests for equality of directions:</p>
+<pre><code>testEqDir :: [Bool]
+testEqDir = [ west  `eqDir` west
+            , east  `eqDir` east
+            , north `eqDir` north
+            , south `eqDir` south
+            , not (west  `eqDir` east)
+            , not (west  `eqDir` north)
+            , not (west  `eqDir` south)
+            , not (east  `eqDir` west)
+            , not (east  `eqDir` north)
+            , not (east  `eqDir` south)
+            , not (north `eqDir` west)
+            , not (north `eqDir` east)
+            , not (north `eqDir` south)
+            , not (south `eqDir` east)
+            , not (south `eqDir` west)
+            , not (south `eqDir` north)
+            ]             </code></pre>
+<h1 id="turning-right-3-points">Turning right (3 points)</h1>
+<p>Given a direction <code>d</code>, <code>turnRight d</code> should be 
+another direction which you get after turning right: North from West, 
+South from East, East from North, West from South.</p>
+<pre><code>turnRight :: Dir -&gt; Dir
+turnRight = undefined</code></pre>
+<p>Tests:</p>
+<pre><code>testTurnRight :: [Bool]
+testTurnRight = [ turnRight west  `eqDir` north
+                , turnRight east  `eqDir` south
+                , turnRight north `eqDir` east
+                , turnRight south `eqDir` west
+                ]</code></pre>
+<h1 id="opposite-direction-3-points">Opposite direction (3 points)</h1>
+<p><code>oppositeDir</code> checks if two directions are opposite to 
+each other. The opposite of East is West, the opposite of West is East. 
+The opposite of North is South, the opposite of South is North.</p>
+<pre><code>oppositeDir :: Dir -&gt; Dir -&gt; Bool
+oppositeDir = undefined</code></pre>
+<p>Tests:</p>
+<pre><code>testOppositeDir :: [Bool]
+testOppositeDir = [ oppositeDir west east
+                  , oppositeDir east west
+                  , oppositeDir north south
+                  , oppositeDir south north
+                  , not (oppositeDir south west)
+                  , not (oppositeDir south east)
+                  , not (oppositeDir south south)
+                  , not (oppositeDir east north)
+                  , not (oppositeDir east east)
+                  ]</code></pre>
+<h1 id="turning-a-snake-to-a-direction-4-points">Turning a snake to a direction (4 points)</h1>
+<p>Given a direction <code>d</code> and a snake <code>s</code>, <code>turnTo d s</code> should be <code>s</code>
+ if the direction is opposite to the snake's current direction (for 
+example, the snake cannot turn from East to West immediately). 
+Otherwise, the snake should be turned into the direction <code>d</code>.</p>
+<pre><code>turnTo :: Dir -&gt; Snake -&gt; Snake
+turnTo = undefined</code></pre>
+<p>The tests are given after a few helper definitions.</p>
+<pre><code>aSnake :: Snake
+aSnake = (east, [(0,0)], 4)
+
+snakeBody :: Snake -&gt; [Position]
+snakeBody (d, ps, l) = ps
+
+snakeDir :: Snake -&gt; Dir
+snakeDir (d, ps, l) = d
+                  
+snakeLength :: Snake -&gt; Int
+snakeLength (d, ps, l) = l
+                  
+testTurnTo :: [Bool]
+testTurnTo = [ -- turnTo does not change the position of the snake
+               snakeBody (turnTo west aSnake) == snakeBody aSnake
+             , snakeBody (turnTo north aSnake) == snakeBody aSnake
+
+               -- turnTo does not change the length of the snake
+             , snakeLength (turnTo north aSnake) == snakeLength aSnake
+
+               -- turning to opposite direction is not allowed, it does not change the direction
+             , snakeDir (turnTo west aSnake) `eqDir` snakeDir aSnake
+
+               -- turning to north from east is allowed
+             , snakeDir (turnTo north aSnake) `eqDir` north
+             ]</code></pre>
+<h1 id="stepping-of-the-snake-5-points">Stepping of the snake (5 points)</h1>
+<p><code>step</code> takes a snake <code>(d, ps, l)</code> and returns a snake which stepped in the direction <code>d</code>. The direction <code>d</code> and the length of the snake <code>l</code> should be unchanged. The new position of the head of the snake will be <code>d</code> applied to the head of <code>ps</code>.</p>
+<p>However you should check if the new position of the head of the snake is not inside <code>ps</code> (otherwise the snake would cross itself). If this is the case, the snake should be returned unchanged.</p>
+<p>If the new position of the head of the snake is not inside <code>ps</code>, you should add it to the head of <code>ps</code> and then truncate the snake so that its length is at most <code>l</code>.</p>
+<p>Look carefully at the test cases if the above is not clear enough (you can ask the teachers too, of course).</p>
+<pre><code>step :: Snake -&gt; Snake
+step = undefined</code></pre>
+<p>Test cases:</p>
+<pre><code>testStep :: [Bool]
+testStep = [ snakeBody (step aSnake) == [(1,0),(0,0)]
+           , snakeBody (step (step aSnake)) == [(2,0),(1,0),(0,0)]
+           , snakeBody (step (step (step (step (step aSnake))))) == [(5,0),(4,0),(3,0),(2,0)]
+           , snakeBody (step (step (step (step (step (step aSnake)))))) == [(6,0),(5,0),(4,0),(3,0)]
+           , snakeBody (step (turnTo north (step aSnake))) == [(1,1),(1,0),(0,0)]
+           , snakeDir (step aSnake) `eqDir` snakeDir aSnake
+           , length (snakeBody (step (step (step (step (step (step aSnake))))))) == snakeLength aSnake
+           , snakeLength aSnake == snakeLength (step (step aSnake))
+           ]</code></pre>
+<h1 id="starting-file">Starting file</h1>
+<pre><code>type Position = (Int, Int)
+type Dir = Position -&gt; Position
+type Snake = (Dir, [Position], Int)
+
+west, east, north, south :: Dir
+west  (x,y) = (x-1,y)
+east  = undefined
+north = undefined
+south = undefined
+
+testDirs :: [Bool]
+testDirs = [ south (0,0) == (0,-1)
+           , east  (3,3) == (4,3)
+           , north (3,2) == (3,3)
+           , west  (2,2) == (1,2)
+           , east (west (0,0)) == (0,0)
+           , north (west (0,0)) == (-1,1)
+           ]
+
+isWest, isEast, isNorth, isSouth :: Dir -&gt; Bool
+isWest  d = fst (d (0,0)) == (-1) &amp;&amp; snd (d (0,0)) == 0
+isEast  = undefined
+isNorth = undefined
+isSouth = undefined
+
+testIsDirs :: [Bool]
+testIsDirs = [ isWest  west
+             , isEast  east
+             , isNorth north
+             , isSouth south
+             , not (isWest south)
+             , not (isNorth west)
+             , not (isEast west)
+             , not (isSouth east)
+             , not (isSouth west)
+             , not (isSouth north)
+             ]
+
+eqDir :: Dir -&gt; Dir -&gt; Bool
+eqDir = undefined
+
+testEqDir :: [Bool]
+testEqDir = [ west  `eqDir` west
+            , east  `eqDir` east
+            , north `eqDir` north
+            , south `eqDir` south
+            , not (west  `eqDir` east)
+            , not (west  `eqDir` north)
+            , not (west  `eqDir` south)
+            , not (east  `eqDir` west)
+            , not (east  `eqDir` north)
+            , not (east  `eqDir` south)
+            , not (north `eqDir` west)
+            , not (north `eqDir` east)
+            , not (north `eqDir` south)
+            , not (south `eqDir` east)
+            , not (south `eqDir` west)
+            , not (south `eqDir` north)
+            ]
+
+turnRight :: Dir -&gt; Dir
+turnRight = undefined
+
+testTurnRight :: [Bool]
+testTurnRight = [ turnRight west  `eqDir` north
+                , turnRight east  `eqDir` south
+                , turnRight north `eqDir` east
+                , turnRight south `eqDir` west
+                ]
+
+oppositeDir :: Dir -&gt; Dir -&gt; Bool
+oppositeDir = undefined
+
+testOppositeDir :: [Bool]
+testOppositeDir = [ oppositeDir west east
+                  , oppositeDir east west
+                  , oppositeDir north south
+                  , oppositeDir south north
+                  , not (oppositeDir south west)
+                  , not (oppositeDir south east)
+                  , not (oppositeDir south south)
+                  , not (oppositeDir east north)
+                  , not (oppositeDir east east)
+                  ]
+
+turnTo :: Dir -&gt; Snake -&gt; Snake
+turnTo = undefined
+
+aSnake :: Snake
+aSnake = (east, [(0,0)], 4)
+
+snakeBody :: Snake -&gt; [Position]
+snakeBody (d, ps, l) = ps
+
+snakeDir :: Snake -&gt; Dir
+snakeDir (d, ps, l) = d
+                  
+snakeLength :: Snake -&gt; Int
+snakeLength (d, ps, l) = l
+                  
+testTurnTo :: [Bool]
+testTurnTo = [ -- turnTo does not change the position of the snake
+               snakeBody (turnTo west aSnake) == snakeBody aSnake
+             , snakeBody (turnTo north aSnake) == snakeBody aSnake
+
+               -- turning to opposite direction is not allowed, it does not change the direction
+             , snakeDir (turnTo west aSnake) `eqDir` snakeDir aSnake
+
+               -- turning to north from east is allowed
+             , snakeDir (turnTo north aSnake) `eqDir` north
+
+               -- turnTo does not change the length of the snake
+             , snakeLength (turnTo north aSnake) == snakeLength aSnake
+             ]
+
+step :: Snake -&gt; Snake
+step = undefined
+
+testStep :: [Bool]
+testStep = [ snakeBody (step aSnake) == [(1,0),(0,0)]
+           , snakeBody (step (step aSnake)) == [(2,0),(1,0),(0,0)]
+           , snakeBody (step (step (step (step (step aSnake))))) == [(5,0),(4,0),(3,0),(2,0)]
+           , snakeBody (step (step (step (step (step (step aSnake)))))) == [(6,0),(5,0),(4,0),(3,0)]
+           , snakeBody (step (turnTo north (step aSnake))) == [(1,1),(1,0),(0,0)]
+           , snakeDir (step aSnake) `eqDir` snakeDir aSnake
+           , length (snakeBody (step (step (step (step (step (step aSnake))))))) == snakeLength aSnake
+           , snakeLength aSnake == snakeLength (step (step aSnake))
+           ]
+
+tests :: Bool
+tests = and (testDirs
+            ++ testIsDirs
+            ++ testEqDir
+            ++ testTurnRight
+            ++ testOppositeDir
+            ++ testTurnTo
+            ++ testStep
+            )</code></pre></div></div></div><div class="row"><div class="col-md-12"><hr></div></div></div></body></html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html class="gr__bead_inf_elte_hu"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8"><title>BE-AD Assignment Management System</title><link rel="shortcut icon" href="https://bead.inf.elte.hu/icon.ico"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content=""><meta name="author" content=""><script src="exam2_files/jquery.js"></script><link type="text/css" href="exam2_files/jquery-ui.css" rel="stylesheet"><script src="exam2_files/jquery-ui.js"></script><script src="exam2_files/moment.js"></script><link type="text/css" href="exam2_files/bootstrap.css" rel="stylesheet"><link type="text/css" href="exam2_files/bootstrap_002.css" rel="stylesheet"><script src="exam2_files/bootstrap.js"></script><link type="text/css" href="exam2_files/bootstrap-datetimepicker.css" rel="stylesheet"><script src="exam2_files/bootstrap-datetimepicker.js"></script><script src="exam2_files/DynamicContents.js"></script><link type="text/css" href="exam2_files/katex.css" rel="stylesheet"><script src="exam2_files/katex.js"></script><script>window.onload = function(){ var mathElements = document.getElementsByClassName("math"); for (var i=0; i < mathElements.length; i++) { var texText = mathElements[i].firstChild; katex.render(texText.data, mathElements[i]); }}</script></head><body data-gr-c-s-loaded="true"><div class="navbar navbar-default navbar-fixed-top"><style>.body{padding-top:70px}</style><div class="container"><div class="navbar-header"><a href="https://bead.inf.elte.hu/home" class="navbar-brand">BE-AD</a><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="collapse navbar-collapse navbar-ex1-collapse"><ul class="nav navbar-nav navbar-right"><li><a>NIQWQX / NIQWQX</a></li><li><a href="https://bead.inf.elte.hu/notifications" id="link-notifications">Notifications (7)</a></li><li><a href="https://bead.inf.elte.hu/profile" id="link-profile">Profile</a></li><li><a href="https://bead.inf.elte.hu/logout" id="link-logout">Logout</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="page-header"><h2>Submission</h2></div></div></div><div class="row"><div class="col-md-12"><table class="table table-bordered table-condensed table-hover table-striped"><tbody><tr><td><b>Course: </b></td><td>Functional languages (MSc) - IPM-13feszFUNLEG</td></tr><tr><td><b>Teacher: </b></td><td>Bozo Istvan, Kaposi Ambrus, Poór Artúr</td></tr><tr><td><b>Assignment: </b></td><td>Midterm exam retake</td></tr><tr><td><b>Deadline: </b></td><td>2018-04-06, 15:45:00</td></tr><tr><td><b>Time left: </b></td><td><a id="ctd">Deadline is reached</a><script>ctdcountdown();function ctdcountdown() {var minsecs = 60;var hoursecs = minsecs * 60;var daysecs = hoursecs* 24;var mstime = -3098971 * 1000;var timestamp = new Date;var interval = setInterval(function() {var el = document.getElementById("ctd");var now = new Date;var dt = now - timestamp;timestamp = now;mstime = mstime - dt;var time = Math.round( mstime / 1000 );if(time < 0) {el.innerHTML = "Deadline is reached";clearInterval(interval);return;}var edays   = Math.floor( time / daysecs );var ehours1 = time % daysecs;var ehours  = Math.floor( ehours1 / hoursecs );if (ehours < 10) ehours = "0" + ehours;var emins1  = ehours1 % hoursecs;var emins   = Math.floor( emins1 / minsecs );if (emins < 10) emins = "0" + emins;var esecs   = emins1 % minsecs;if (esecs < 10) esecs = "0" + esecs;var text="";if(edays == 0) {if(ehours == 0) {text = emins + ':' + esecs;} else {text = ehours + ':' + emins + ':' + esecs;}} else {text = edays + " day(s) " + ehours + ':' + emins + ':' + esecs;}el.innerHTML = text;}, 1000);}</script></td></tr></tbody></table></div></div><div class="row"><div class="col-md-12"><div class="alert alert-danger"><p>Deadline is reached.</p></div></div></div><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="row"><div class="col-md-12"><p>There are no submissions.</p></div></div></div></div><div class="row"><div class="col-md-12"><h2>Description</h2><div style="margin-left:0px; background: lightgray"><h1 id="overview">Overview</h1>
+<p>We will implement Hangman, a game where the goal is to figure out a hidden phrase by guessing letters in a certain limit.</p>
+<p>The rules are as follows:</p>
+<ul>
+<li><p>Initially only the length of phrase and spaces between words are visible. So, the phrase "hello world" becomes <code>_ _ _ _ _  _ _ _ _ _</code></p></li>
+<li><p>The player may guess only one letter in every round.</p></li>
+<li><p>The guessed letters actually found in the phrase become visible.</p></li>
+<li><p>Missed guesses are noted.</p></li>
+</ul>
+<p>The game ends if one of the following holds:</p>
+<ul>
+<li><p>The player manages to figure out the phrase, that is, every 
+letter becomes visible, and the player has at most five missed guesses.</p></li>
+<li><p>The player has more than five missed guesses.</p></li>
+</ul>
+<p>We start with import statements:</p>
+<pre><code>import Data.Char (toUpper, toLower)
+import Data.List (sort)</code></pre>
+<p>There is an alphabet for the game. The hidden phrase may only contain letters from the given alphabet.</p>
+<pre><code>type ABC = [Char]
+
+abc :: ABC
+abc = ['A'..'Z']</code></pre>
+<p>The state of the game (<code>State</code>) consists of the hidden phrase (<code>Riddle</code>), the correctly guessed letters (<code>RightGuesses</code>) and missed guesses (<code>WrongGuesses</code>).</p>
+<p>Note that all three components of a state may only contain letters. 
+We enforce this invariant through correct function definitions.</p>
+<pre><code>type Riddle       = String
+type RightGuesses = [Char]
+type WrongGuesses = [Char]
+type State        = (Riddle, RightGuesses, WrongGuesses)</code></pre>
+<h1 id="valid-letters-1-point">Valid letters (1 point)</h1>
+<p>The guessed letters may as well be lower and upper case letters and 
+other characters. Define the function that validates a letter, meaning 
+that it is part of a given alphabet, regardless of case.</p>
+<pre><code>isValidLetter :: Char -&gt; ABC -&gt; Bool</code></pre>
+<p>Test cases:</p>
+<pre><code>test_isValidLetter =
+  [ isValidLetter 'a' abc        == True
+  , isValidLetter 'X' abc        == True
+  , isValidLetter ' ' abc        == False
+  , isValidLetter '$' "*]-$&gt;&lt;"   == True
+  , isValidLetter 'E' ['a'..'z'] == True
+  ]</code></pre>
+<h1 id="initial-state-2-points">Initial state (2 points)</h1>
+<p>Define the function which creates an initial state from a phrase. If 
+the phrase consists of letters and spaces only then the function yields 
+an initial state. Recall that a state has three components: the phrase, 
+correct guesses and missed guesses. Evidently, the latter two are empty 
+lists at the beginning.</p>
+<p>If the phrase has characters not being in the given alphabet then return <code>undefined</code>. Hints: use the <code>toUpper</code> and <code>map</code> functions.</p>
+<pre><code>startState :: ABC -&gt; String -&gt; State</code></pre>
+<p>Test cases:</p>
+<pre><code>test_startState =
+  [ startState abc ""                == ("","","")
+  , startState abc "SOS"             == ("SOS","","")
+  , startState abc "Save Our Souls"  == ("SAVE OUR SOULS","","")
+  ]</code></pre>
+<h1 id="guessing-letters-2-points">Guessing letters (2 points)</h1>
+<p>Define the function which updates a state using a guessed letter.</p>
+<p>There are multiple ways to consider:</p>
+<ul>
+<li><p>If the guessed letter, regardless of case, is not part of the alphabet then return <code>undefined</code>.</p></li>
+<li><p>If the guessed letter has already occured before, meaning it is among guessed letters then do not update the state.</p></li>
+<li><p>If the guessed letter is a letter of the phrase then place it in the list of correct guesses.</p></li>
+<li><p>If the guessed letter is not a letter of the phrase then place it in the list of missed guesses.</p></li>
+</ul>
+<p>Hint: use the <code>elem</code> function.</p>
+<pre><code>guessLetter :: ABC -&gt; Char -&gt; State -&gt; State</code></pre>
+<p>Test cases:</p>
+<pre><code>test_guessLetter =
+  [ guessLetter abc 'a' (startState abc "Save Our Souls") == ("SAVE OUR SOULS","A","")
+  , guessLetter abc 'A' (startState abc "Save Our Souls") == ("SAVE OUR SOULS","A","")
+  , guessLetter abc 'k' (startState abc "Save Our Souls") == ("SAVE OUR SOULS","","K")
+  , guessLetter abc 'a' (guessLetter abc 'a' (startState abc "Save Our Souls")) == ("SAVE OUR SOULS","A","")
+  , guessLetter abc 'K' (guessLetter abc 'k' (startState abc "Save Our Souls")) == ("SAVE OUR SOULS","","K")
+  , guessLetter abc 'v' ("SAVE OUR SOULS", "A", [])       == ("SAVE OUR SOULS","VA","")
+  , guessLetter abc 'k' ("SAVE OUR SOULS", "VA", [])      == ("SAVE OUR SOULS","VA","K")
+  ]</code></pre>
+<h1 id="displaying-a-phrase-2-points">Displaying a phrase (2 points)</h1>
+<p>Define the function which visualizes a phrase in its current state for the player.</p>
+<p>The correctly guessed letters and spaces of the phrase are visible and everything else is replaced by an underscore character.</p>
+<p><em>Note: <code>showState</code> is not allowed here.</em></p>
+<pre><code>showRiddle :: State -&gt; String</code></pre>
+<p>Test cases:</p>
+<pre><code>test_showRiddle =
+  [ showRiddle ("SAVE OUR SOULS", [], [])     == "____ ___ _____"
+  , showRiddle ("SAVE OUR SOULS", "AL", [])   == "_A__ ___ ___L_"
+  , showRiddle ("SAVE OUR SOULS", "SAL", [])  == "SA__ ___ S__LS"
+  , showRiddle ("SAVE OUR SOULS", "SALO", []) == "SA__ O__ SO_LS"
+  , showRiddle ("SOS", "SO", "AL")            == "SOS"
+  ]</code></pre>
+<h1 id="displaying-a-state-1-point">Displaying a state (1 point)</h1>
+<p>Define the function which visualizes a state for the player.</p>
+<pre><code>showState :: State -&gt; State</code></pre>
+<p>Test cases:</p>
+<pre><code>test_showState =
+  [ showState ("SAVE OUR SOULS", [], [])     == ("____ ___ _____", "", "")
+  , showState ("SAVE OUR SOULS", "SAL", [])  == ("SA__ ___ S__LS", "SAL", "")
+  , showState ("SAVE OUR SOULS", "SALO", []) == ("SA__ O__ SO_LS", "SALO", "")
+  ]</code></pre>
+<h1 id="is-a-riddle-complete-2-points">Is a riddle complete? (2 points)</h1>
+<p>Define the function which examines whether the player has managed to 
+figure out the phrase. This is the case when every letter of the prase 
+is among the correct guesses.</p>
+<p><em>Note: We do not concern ourselves about the number of missed guesses here.</em></p>
+<pre><code>isRiddleComplete :: State -&gt; Bool</code></pre>
+<pre class="haskell"><code>test_isRiddleComplete =
+  [ isRiddleComplete ("SOS", [], [])                        == False
+  , isRiddleComplete ("SOS", "SALO", [])                    == True
+  , isRiddleComplete ("SOS", "ALO", [])                     == False
+  , isRiddleComplete ("SOS", [], "LKHJIG")                  == False
+  , isRiddleComplete ("SAVE OUR SOULS", "SAVEOURL", "KZTW") == True
+  ]</code></pre>
+<h1 id="game-over-1-point">Game over (1 point)</h1>
+<p>Define the function which tests whether the game is over.</p>
+<p>Recall that the game ends if one of the following holds:</p>
+<ul>
+<li><p>The player figures out the phrase and makes at most five missed guesses.</p></li>
+<li><p>The player makes more than five missed guesses.</p></li>
+</ul>
+<pre class="haskell"><code>isGameOver :: State -&gt; Bool</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_isGameOver =
+  [ isGameOver ("SOS", [], [])                          == False
+  , isGameOver ("SOS", [], "LKHJIG")                    == True
+  , isGameOver ("SAVE OUR SOULS", "SAVEOURL", "KZTW")   == True
+  , isGameOver ("SAVE OUR SOULS", "SAVEOURL", "KZTWM")  == True
+  , isGameOver ("SAVE OUR SOULS", "SAVEOURL", "KZTWMB") == True
+  ]</code></pre>
+<h1 id="unused-letters-1-point">Unused letters (1 point)</h1>
+<p>Define the function which produces all the unused letters of a given alphabet.</p>
+<pre class="haskell"><code>getAvailableLetters :: ABC -&gt; State -&gt; [Char]</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_getAvailableLetters =
+  [ sort (getAvailableLetters abc ("SAVE OUR SOULS", "SAVEOURL", "KZTW")) == "BCDFGHIJMNPQXY"
+  , sort (getAvailableLetters abc ("SOS", [], "LKHJIG"))                  == "ABCDEFMNOPQRSTUVWXYZ"
+  , sort (getAvailableLetters abc ("SOS", [], []))                        == "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  ]</code></pre>
+<p>You can start with the file below.</p>
+<pre><code>import Data.Char (toUpper, toLower)
+import Data.List (sort)
+
+type ABC = [Char]
+
+abc :: ABC
+abc = ['A'..'Z']
+
+type Riddle       = String
+type RightGuesses = [Char]
+type WrongGuesses = [Char]
+type State        = (Riddle, RightGuesses, WrongGuesses)
+
+isValidLetter :: Char -&gt; ABC -&gt; Bool
+isValidLetter = undefined
+
+test_isValidLetter =
+  [ isValidLetter 'a' abc        == True
+  , isValidLetter 'X' abc        == True
+  , isValidLetter ' ' abc        == False
+  , isValidLetter '$' "*]-$&gt;&lt;"   == True
+  , isValidLetter 'E' ['a'..'z'] == True
+  ]
+
+startState :: ABC -&gt; String -&gt; State
+startState = undefined
+
+test_startState =
+  [ startState abc ""                == ("","","")
+  , startState abc "SOS"             == ("SOS","","")
+  , startState abc "Save Our Souls"  == ("SAVE OUR SOULS","","")
+  ]
+
+guessLetter :: ABC -&gt; Char -&gt; State -&gt; State
+guessLetter = undefined
+
+test_guessLetter =
+  [ guessLetter abc 'a' (startState abc "Save Our Souls") == ("SAVE OUR SOULS","A","")
+  , guessLetter abc 'A' (startState abc "Save Our Souls") == ("SAVE OUR SOULS","A","")
+  , guessLetter abc 'k' (startState abc "Save Our Souls") == ("SAVE OUR SOULS","","K")
+  , guessLetter abc 'a' (guessLetter abc 'a' (startState abc "Save Our Souls")) == ("SAVE OUR SOULS","A","")
+  , guessLetter abc 'K' (guessLetter abc 'k' (startState abc "Save Our Souls")) == ("SAVE OUR SOULS","","K")
+  , guessLetter abc 'v' ("SAVE OUR SOULS", "A", [])       == ("SAVE OUR SOULS","VA","")
+  , guessLetter abc 'k' ("SAVE OUR SOULS", "VA", [])      == ("SAVE OUR SOULS","VA","K")
+  ]
+
+showRiddle :: State -&gt; String
+showRiddle = undefined
+
+test_showRiddle =
+  [ showRiddle ("SAVE OUR SOULS", [], [])     == "____ ___ _____"
+  , showRiddle ("SAVE OUR SOULS", "AL", [])   == "_A__ ___ ___L_"
+  , showRiddle ("SAVE OUR SOULS", "SAL", [])  == "SA__ ___ S__LS"
+  , showRiddle ("SAVE OUR SOULS", "SALO", []) == "SA__ O__ SO_LS"
+  , showRiddle ("SOS", "SO", "AL")            == "SOS"
+  ]
+
+showState :: State -&gt; State
+showState = undefined
+
+test_showState =
+  [ showState ("SAVE OUR SOULS", [], [])     == ("____ ___ _____", "", "")
+  , showState ("SAVE OUR SOULS", "SAL", [])  == ("SA__ ___ S__LS", "SAL", "")
+  , showState ("SAVE OUR SOULS", "SALO", []) == ("SA__ O__ SO_LS", "SALO", "")
+  ]
+
+isRiddleComplete :: State -&gt; Bool
+isRiddleComplete = undefined
+
+test_isRiddleComplete =
+  [ isRiddleComplete ("SOS", [], [])                        == False
+  , isRiddleComplete ("SOS", "SALO", [])                    == True
+  , isRiddleComplete ("SOS", "ALO", [])                     == False
+  , isRiddleComplete ("SOS", [], "LKHJIG")                  == False
+  , isRiddleComplete ("SAVE OUR SOULS", "SAVEOURL", "KZTW") == True
+  ]
+
+isGameOver :: State -&gt; Bool
+isGameOver = undefined
+
+test_isGameOver =
+  [ isGameOver ("SOS", [], [])                          == False
+  , isGameOver ("SOS", [], "LKHJIG")                    == True
+  , isGameOver ("SAVE OUR SOULS", "SAVEOURL", "KZTW")   == True
+  , isGameOver ("SAVE OUR SOULS", "SAVEOURL", "KZTWM")  == True
+  , isGameOver ("SAVE OUR SOULS", "SAVEOURL", "KZTWMB") == True
+  ]
+
+getAvailableLetters :: ABC -&gt; State -&gt; [Char]
+getAvailableLetters = undefined
+
+test_getAvailableLetters =
+  [ sort (getAvailableLetters abc ("SAVE OUR SOULS", "SAVEOURL", "KZTW")) == "BCDFGHIJMNPQXY"
+  , sort (getAvailableLetters abc ("SOS", [], "LKHJIG"))                  == "ABCDEFMNOPQRSTUVWXYZ"
+  , sort (getAvailableLetters abc ("SOS", [], []))                        == "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  ]
+
+allTests = (and (concatMap snd tests), tests)
+
+tests =
+  [ ("test_isValidLetter", test_isValidLetter)
+  , ("test_startState", test_startState)
+  , ("test_guessLetter", test_guessLetter)
+  , ("test_showRiddle", test_showRiddle)
+  , ("test_showState", test_showState)
+  , ("test_isRiddleComplete", test_isRiddleComplete)
+  , ("test_isGameOver", test_isGameOver)
+  , ("test_getAvailableLetters", test_getAvailableLetters)
+  ]</code></pre></div></div></div><div class="row"><div class="col-md-12"><hr></div></div></div></body></html>

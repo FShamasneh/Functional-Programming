@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="gr__bead_inf_elte_hu"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8"><title>BE-AD Assignment Management System</title><link rel="shortcut icon" href="https://bead.inf.elte.hu/icon.ico"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content=""><meta name="author" content=""><script src="exam3_files/jquery.js"></script><link type="text/css" href="exam3_files/jquery-ui.css" rel="stylesheet"><script src="exam3_files/jquery-ui.js"></script><script src="exam3_files/moment.js"></script><link type="text/css" href="exam3_files/bootstrap.css" rel="stylesheet"><link type="text/css" href="exam3_files/bootstrap_002.css" rel="stylesheet"><script src="exam3_files/bootstrap.js"></script><link type="text/css" href="exam3_files/bootstrap-datetimepicker.css" rel="stylesheet"><script src="exam3_files/bootstrap-datetimepicker.js"></script><script src="exam3_files/DynamicContents.js"></script><link type="text/css" href="exam3_files/katex.css" rel="stylesheet"><script src="exam3_files/katex.js"></script><script>window.onload = function(){ var mathElements = document.getElementsByClassName("math"); for (var i=0; i < mathElements.length; i++) { var texText = mathElements[i].firstChild; katex.render(texText.data, mathElements[i]); }}</script></head><body data-gr-c-s-loaded="true"><div class="navbar navbar-default navbar-fixed-top"><style>.body{padding-top:70px}</style><div class="container"><div class="navbar-header"><a href="https://bead.inf.elte.hu/home" class="navbar-brand">BE-AD</a><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="collapse navbar-collapse navbar-ex1-collapse"><ul class="nav navbar-nav navbar-right"><li><a>NIQWQX / NIQWQX</a></li><li><a href="https://bead.inf.elte.hu/notifications" id="link-notifications">Notifications (7)</a></li><li><a href="https://bead.inf.elte.hu/profile" id="link-profile">Profile</a></li><li><a href="https://bead.inf.elte.hu/logout" id="link-logout">Logout</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="page-header"><h2>Submission</h2></div></div></div><div class="row"><div class="col-md-12"><table class="table table-bordered table-condensed table-hover table-striped"><tbody><tr><td><b>Course: </b></td><td>Functional languages (MSc) - IPM-13feszFUNLEG</td></tr><tr><td><b>Teacher: </b></td><td>Bozo Istvan, Kaposi Ambrus, Poór Artúr</td></tr><tr><td><b>Assignment: </b></td><td>Midterm exam retake retake</td></tr><tr><td><b>Deadline: </b></td><td>2018-04-13, 15:35:00</td></tr><tr><td><b>Time left: </b></td><td><a id="ctd">Deadline is reached</a><script>ctdcountdown();function ctdcountdown() {var minsecs = 60;var hoursecs = minsecs * 60;var daysecs = hoursecs* 24;var mstime = -2494789 * 1000;var timestamp = new Date;var interval = setInterval(function() {var el = document.getElementById("ctd");var now = new Date;var dt = now - timestamp;timestamp = now;mstime = mstime - dt;var time = Math.round( mstime / 1000 );if(time < 0) {el.innerHTML = "Deadline is reached";clearInterval(interval);return;}var edays   = Math.floor( time / daysecs );var ehours1 = time % daysecs;var ehours  = Math.floor( ehours1 / hoursecs );if (ehours < 10) ehours = "0" + ehours;var emins1  = ehours1 % hoursecs;var emins   = Math.floor( emins1 / minsecs );if (emins < 10) emins = "0" + emins;var esecs   = emins1 % minsecs;if (esecs < 10) esecs = "0" + esecs;var text="";if(edays == 0) {if(ehours == 0) {text = emins + ':' + esecs;} else {text = ehours + ':' + emins + ':' + esecs;}} else {text = edays + " day(s) " + ehours + ':' + emins + ':' + esecs;}el.innerHTML = text;}, 1000);}</script></td></tr></tbody></table></div></div><div class="row"><div class="col-md-12"><div class="alert alert-danger"><p>Deadline is reached.</p></div></div></div><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="row"><div class="col-md-12"><p>There are no submissions.</p></div></div></div></div><div class="row"><div class="col-md-12"><h2>Description</h2><div style="margin-left:0px; background: lightgray"><h1 id="overview">Overview</h1>
+<p>We will implement compression for strings using <em>run-length encoding</em>:
+ a string will be replaced by another string where runs of repeated 
+characters are replaced by a single character and the number which says 
+how many times it appeared. For example, the string <code>aaaaabbbbcc</code> will be compressed to <code>a5b4c2</code>. This compression only works well for strings which have many runs.</p>
+<p>Runs of more than 9 characters will be replaced by multiple character-number pairs. For example, <code>dddddddddddd</code> will be compressed to <code>d9d3</code>.</p>
+<p>This exercise was taken from <a href="http://www.cs.nott.ac.uk/~gmh">Graham Hutton</a>.</p>
+<h1 id="equal-characters-at-the-beginning-of-a-string-3-points">Equal characters at the beginning of a string (3 points)</h1>
+<p>Define a function <code>equals</code> which selects a run of repeated
+ characters from the beginning of a string, the run should be as long as
+ possible. Hint: use the function <code>takeWhile</code>.</p>
+<pre><code>equals :: String -&gt; String
+equals = undefined</code></pre>
+<p>Test cases:</p>
+<pre><code>test_equals =
+  [ equals "aaaaabbbbcc" == "aaaaa"
+  , equals "ddddddddddddddd" == "ddddddddddddddd"
+  , equals "aa" == "aa"
+  , equals "abc" == "a"
+  , equals "" == ""
+  ]</code></pre>
+<h1 id="a-run-1-point">A run (1 point)</h1>
+<p>Using <code>equals</code>, define a function <code>run</code> which selects a run of length at most 9 from the beginning of the string.</p>
+<pre><code>run :: String -&gt; String
+run = undefined</code></pre>
+<p>Test cases:</p>
+<pre><code>test_run =
+  [ run "aaaaabbbbcc" == "aaaaa"
+  , run "ddddddddddddddd" == "ddddddddd"
+  , run "aa" == "aa"
+  , run "abc" == "a"
+  , run "" == ""
+  ]</code></pre>
+<h1 id="all-runs">All runs</h1>
+<p>The <code>runs</code> function splits the string into a list of runs. We use <code>run</code> in its definition. We defined this function for you.</p>
+<pre><code>runs :: String -&gt; [String]
+runs [] = []
+runs s = r : runs (drop (length r) s)
+  where
+    r = run s</code></pre>
+<p>Test cases:</p>
+<pre><code>test_runs =
+  [ runs "aaaaabbbbcc" == ["aaaaa", "bbbb", "cc"]
+  , runs "ddddddddddddddd" == ["ddddddddd", "dddddd"]
+  , runs "aa" == ["aa"]
+  , runs "abc" == ["a", "b", "c"]
+  , runs "" == []
+  ]</code></pre>
+<h1 id="encoding-3-points">Encoding (3 points)</h1>
+<p>Using <code>runs</code>, define the function <code>encode</code> 
+which takes a string and returns all the runs encoded by its character 
+and the length of the run (which is at most 9). Hint: use <code>map</code> or list comprehension.</p>
+<pre><code>encode :: String -&gt; [(Char,Int)]
+encode = undefined</code></pre>
+<p>Test cases:</p>
+<pre><code>test_encode =
+  [ encode "aaaaabbbbcc" == [('a', 5), ('b', 4), ('c', 2)]
+  , encode "ddddddddddddddd" == [('d', 9), ('d', 6)]
+  , encode "aa" == [('a', 2)]
+  , encode "abc" == [('a', 1), ('b', 1), ('c', 1)]
+  , encode "" == []
+  ]</code></pre>
+<h1 id="compression-4-points">Compression (4 points)</h1>
+<p>Using <code>encode</code>, define compression: it takes a string and returns the run-length compressed version as described above. Hints: use <code>concat</code>. To turn a number to a string, you can use the <code>show</code> function.</p>
+<pre><code>compress :: String -&gt; String
+compress = undefined</code></pre>
+<p>Test cases:</p>
+<pre><code>test_compress =
+  [ compress "aaaaabbbbcc" == "a5b4c2"
+  , compress "ddddddddddddddd" == "d9d6"
+  , compress "aa" == "a2"
+  , compress "abc" == "a1b1c1"
+  , compress "" == ""
+  ]</code></pre>
+<h1 id="decoding-4-points">Decoding (4 points)</h1>
+<p>Define the inverse of encode. It takes a list of runs given by character-number pairs and turns it into a string.</p>
+<p>Hint: use <code>replicate</code> and <code>concat</code>.</p>
+<pre><code>decode :: [(Char,Int)] -&gt; String
+decode = undefined</code></pre>
+<p>Test cases:</p>
+<pre><code>test_decode =
+  [ decode [('a', 5), ('b', 4), ('c', 2)] == "aaaaabbbbcc"
+  , decode [('d', 9), ('d', 6)] == "ddddddddddddddd"
+  , decode [('a', 2)] == "aa"
+  , decode [('a', 1), ('b', 1), ('c', 1)] == "abc"
+  , decode [] == ""
+  ]</code></pre>
+<h1 id="unruns">Unruns</h1>
+<p>We defined the function <code>unruns</code> for you which turns a compressed string into character-number pairs.</p>
+<pre><code>unruns :: String -&gt; [(Char, Int)]
+unruns [] = []
+unruns (c:i:xs) = (c, read (i:[])) : unruns xs
+
+test_unruns = 
+  [ unruns "a5b4c2" == [('a', 5), ('b', 4), ('c', 2)]
+  , unruns "d9d6" == [('d', 9), ('d', 6)]
+  , unruns "a2" == [('a', 2)]
+  , unruns "a1b1c1" == [('a', 1), ('b', 1), ('c', 1)]
+  , unruns "" == []
+  ]</code></pre>
+<h1 id="decompress-1-point">Decompress (1 point)</h1>
+<p>Define the inverse of compress: decompression.</p>
+<pre><code>decompress :: String -&gt; String
+decompress = undefined</code></pre>
+<p>Test cases:</p>
+<pre><code>test_decompress =
+  [ decompress "a5b4c2" == "aaaaabbbbcc"
+  , decompress "d9d6" == "ddddddddddddddd"
+  , decompress "a2" == "aa"
+  , decompress "a1b1c1" == "abc"
+  , decompress "" == ""
+  ]</code></pre>
+<h1 id="starting-file">Starting file</h1>
+<p>You can use the following file to start your program.</p>
+<pre><code>equals :: String -&gt; String
+equals = undefined
+          
+test_equals =
+  [ equals "aaaaabbbbcc" == "aaaaa"
+  , equals "ddddddddddddddd" == "ddddddddddddddd"
+  , equals "aa" == "aa"
+  , equals "abc" == "a"
+  , equals "" == ""
+  ]
+
+run :: String -&gt; String
+run = undefined
+
+test_run =
+  [ run "aaaaabbbbcc" == "aaaaa"
+  , run "ddddddddddddddd" == "ddddddddd"
+  , run "aa" == "aa"
+  , run "abc" == "a"
+  , run "" == ""
+  ]
+
+runs :: String -&gt; [String]
+runs [] = []
+runs s = r : runs (drop (length r) s)
+  where
+    r = run s
+
+test_runs =
+  [ runs "aaaaabbbbcc" == ["aaaaa", "bbbb", "cc"]
+  , runs "ddddddddddddddd" == ["ddddddddd", "dddddd"]
+  , runs "aa" == ["aa"]
+  , runs "abc" == ["a", "b", "c"]
+  , runs "" == []
+  ]
+
+encode :: String -&gt; [(Char,Int)]
+encode = undefined
+
+test_encode =
+  [ encode "aaaaabbbbcc" == [('a', 5), ('b', 4), ('c', 2)]
+  , encode "ddddddddddddddd" == [('d', 9), ('d', 6)]
+  , encode "aa" == [('a', 2)]
+  , encode "abc" == [('a', 1), ('b', 1), ('c', 1)]
+  , encode "" == []
+  ]
+
+compress :: String -&gt; String
+compress = undefined
+
+test_compress =
+  [ compress "aaaaabbbbcc" == "a5b4c2"
+  , compress "ddddddddddddddd" == "d9d6"
+  , compress "aa" == "a2"
+  , compress "abc" == "a1b1c1"
+  , compress "" == ""
+  ]
+
+decode :: [(Char,Int)] -&gt; String
+decode = undefined
+
+test_decode =
+  [ decode [('a', 5), ('b', 4), ('c', 2)] == "aaaaabbbbcc"
+  , decode [('d', 9), ('d', 6)] == "ddddddddddddddd"
+  , decode [('a', 2)] == "aa"
+  , decode [('a', 1), ('b', 1), ('c', 1)] == "abc"
+  , decode [] == ""
+  ]
+
+unruns :: String -&gt; [(Char, Int)]
+unruns [] = []
+unruns (c:i:xs) = (c, read (i:[])) : unruns xs
+
+test_unruns = 
+  [ unruns "a5b4c2" == [('a', 5), ('b', 4), ('c', 2)]
+  , unruns "d9d6" == [('d', 9), ('d', 6)]
+  , unruns "a2" == [('a', 2)]
+  , unruns "a1b1c1" == [('a', 1), ('b', 1), ('c', 1)]
+  , unruns "" == []
+  ]
+
+decompress :: String -&gt; String
+decompress = undefined
+
+test_decompress =
+  [ decompress "a5b4c2" == "aaaaabbbbcc"
+  , decompress "d9d6" == "ddddddddddddddd"
+  , decompress "a2" == "aa"
+  , decompress "a1b1c1" == "abc"
+  , decompress "" == ""
+  ]
+
+allTests = (and bs, bs)
+  where
+    bs = map and
+      [ test_equals
+      , test_run
+      , test_runs
+      , test_encode
+      , test_compress
+      , test_decode
+      , test_unruns
+      , test_decompress
+      ]</code></pre></div></div></div><div class="row"><div class="col-md-12"><hr></div></div></div></body></html>
