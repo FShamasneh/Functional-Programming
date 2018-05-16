@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="gr__bead_inf_elte_hu"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta charset="utf-8"><title>BE-AD Assignment Management System</title><link rel="shortcut icon" href="https://bead.inf.elte.hu/icon.ico"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content=""><meta name="author" content=""><script src="midterm2_practice_files/jquery.js"></script><link type="text/css" href="midterm2_practice_files/jquery-ui.css" rel="stylesheet"><script src="midterm2_practice_files/jquery-ui.js"></script><script src="midterm2_practice_files/moment.js"></script><link type="text/css" href="midterm2_practice_files/bootstrap.css" rel="stylesheet"><link type="text/css" href="midterm2_practice_files/bootstrap_002.css" rel="stylesheet"><script src="midterm2_practice_files/bootstrap.js"></script><link type="text/css" href="midterm2_practice_files/bootstrap-datetimepicker.css" rel="stylesheet"><script src="midterm2_practice_files/bootstrap-datetimepicker.js"></script><script src="midterm2_practice_files/DynamicContents.js"></script><link type="text/css" href="midterm2_practice_files/katex.css" rel="stylesheet"><script src="midterm2_practice_files/katex.js"></script><script>window.onload = function(){ var mathElements = document.getElementsByClassName("math"); for (var i=0; i < mathElements.length; i++) { var texText = mathElements[i].firstChild; katex.render(texText.data, mathElements[i]); }}</script></head><body data-gr-c-s-loaded="true"><div class="navbar navbar-default navbar-fixed-top"><style>.body{padding-top:70px}</style><div class="container"><div class="navbar-header"><a href="https://bead.inf.elte.hu/home" class="navbar-brand">BE-AD</a><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button></div><div class="collapse navbar-collapse navbar-ex1-collapse"><ul class="nav navbar-nav navbar-right"><li><a>NIQWQX / NIQWQX</a></li><li><a href="https://bead.inf.elte.hu/notifications" id="link-notifications">Notifications (16)</a></li><li><a href="https://bead.inf.elte.hu/profile" id="link-profile">Profile</a></li><li><a href="https://bead.inf.elte.hu/logout" id="link-logout">Logout</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="page-header"><h2>Submission</h2></div></div></div><div class="row"><div class="col-md-12"><table class="table table-bordered table-condensed table-hover table-striped"><tbody><tr><td><b>Course: </b></td><td>Functional languages (MSc) - IPM-13feszFUNLEG</td></tr><tr><td><b>Teacher: </b></td><td>Bozo Istvan, Kaposi Ambrus, Poór Artúr</td></tr><tr><td><b>Assignment: </b></td><td>Midterm exam #2 preparation</td></tr><tr><td><b>Deadline: </b></td><td>2018-05-24, 23:50:00</td></tr><tr><td><b>Time left: </b></td><td><a id="ctd">8 day(s) 07:55:17</a><script>ctdcountdown();function ctdcountdown() {var minsecs = 60;var hoursecs = minsecs * 60;var daysecs = hoursecs* 24;var mstime = 723842 * 1000;var timestamp = new Date;var interval = setInterval(function() {var el = document.getElementById("ctd");var now = new Date;var dt = now - timestamp;timestamp = now;mstime = mstime - dt;var time = Math.round( mstime / 1000 );if(time < 0) {el.innerHTML = "Deadline is reached";clearInterval(interval);return;}var edays   = Math.floor( time / daysecs );var ehours1 = time % daysecs;var ehours  = Math.floor( ehours1 / hoursecs );if (ehours < 10) ehours = "0" + ehours;var emins1  = ehours1 % hoursecs;var emins   = Math.floor( emins1 / minsecs );if (emins < 10) emins = "0" + emins;var esecs   = emins1 % minsecs;if (esecs < 10) esecs = "0" + esecs;var text="";if(edays == 0) {if(ehours == 0) {text = emins + ':' + esecs;} else {text = ehours + ':' + emins + ':' + esecs;}} else {text = edays + " day(s) " + ehours + ':' + emins + ':' + esecs;}el.innerHTML = text;}, 1000);}</script></td></tr></tbody></table></div></div><div class="row"><div class="col-md-12"><h2>Solution</h2><form method="post" action="/submission?asg-key=151" accept-charset="UTF-8" id="submission-form" enctype="multipart/form-data"><div class="form-group"><label for="submission-text"></label><textarea class="form-control" required="" rows="8" id="submission-text" name="submission-text" style="font-family: monospace;"></textarea></div><button type="submit" name="submit-solution-btn" class="btn btn-block btn-default">Submit</button></form></div></div><div class="row"><div class="col-md-12"><hr></div></div><div class="row"><div class="col-md-12"><div class="row"><div class="col-md-12"><div class="list-group" style="max-height: 168px; overflow: auto;"><a href="https://bead.inf.elte.hu/submission-details?asg-key=151&amp;submission-key=10052" class="list-group-item">2018-05-16, 14:35:19<span class="badge">Tests are failed</span></a></div></div></div></div></div><div class="row"><div class="col-md-12"><h2>Description</h2><div style="margin-left:0px; background: lightgray"><p><em>Recommended for use: the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/">GHC documentation</a> and <a href="https://www.haskell.org/hoogle/">Hoogle (Haskell API search)</a>.
+ Please note that there are tasks that may depend on others, so it is 
+recommended to define the functions in the order of their introduction 
+in the text below. Each function must have exactly the same name and 
+type as it is given, otherwise the solution will not be accepted. Place 
+all the function definitions in a single source file and submit the 
+contents here, in BE-AD. In addition to that, it is highly recommended 
+to use the same source file for the development.</em></p>
+<p><em>If you want to use the tests embedded into the description, add the following code snippet to the beginning of your source file:</em></p>
+<pre class="haskell"><code>import Control.DeepSeq
+import Control.Exception
+import System.IO.Unsafe
+import Data.Char
+import Data.Either
+import Data.Function
+import Data.List
+
+raises :: NFData a =&gt; a -&gt; String -&gt; Bool
+x `raises` s = unsafePerformIO $
+  either ((s ~=) . f) (const False) `fmap` (try $ evaluate $ force x)
+  where
+    f :: SomeException -&gt; String
+    f = show
+
+    (~=) = isPrefixOf `on` (map toUpper . unwords . words)
+
+allTests = (and (concatMap snd tests), tests)
+
+tests =
+  [ ("test_isLand", test_isLand)
+  , ("test_hasSea", test_hasSea)
+  , ("test_splitSegments", test_splitSegments)
+  , ("test_islandCount", test_islandCount)
+  , ("test_lengthOfIslands", test_lengthOfIslands)
+  , ("test_hasIslandsOfSameLength", test_hasIslandsOfSameLength)
+  , ("test_highestIsland", test_highestIsland)
+  , ("test_hypotenuse", test_hypotenuse)
+  , ("test_walkingDistance", test_walkingDistance)
+  , ("test_fullWalkingDistance", test_fullWalkingDistance)
+  ]</code></pre>
+<h1 id="summary-of-the-task">Summary of the task</h1>
+<p>We measured the metres above sea level of the surface of the Earth at
+ certain points. The result of a measurement is an element of the type <code>Measure</code>. The constructor <code>Land</code> denotes a measurement above land. The constructor <code>Sea</code> denotes a measurement above sea.</p>
+<pre class="haskell"><code>data Measure
+  = Land Int
+  | Sea
+  deriving (Show, Eq)</code></pre>
+<p>For the measurements above land the <code>Int</code> parameter 
+denotes the metres above sea level. This is a positive integer number. 
+For measurements above the sea, we don't have any parameters as the 
+metres above sea level is <code>0</code> in these points.</p>
+<p>The measurements are given in a list of <code>Measure</code> values.</p>
+<pre class="haskell"><code>type Measures = [Measure]</code></pre>
+<p>The results of a few measurements are given below.</p>
+<pre class="haskell"><code>testMeasures1 :: Measures
+testMeasures1 = []
+
+testMeasures2 :: Measures
+testMeasures2 =
+  [ Land 300, Land 200, Land 400, Sea, Sea, Land 300, Land 200, Land 150, Sea
+  , Land 40, Land 80, Land 500, Land 650, Land 890, Land 300, Sea, Sea, Sea
+  , Sea, Land 40 ]
+
+testMeasures3 :: Measures
+testMeasures3 =
+  [ Sea, Sea, Sea, Land 50, Land 100, Land 10, Sea, Land 30, Land 80, Land 350
+  , Land 700, Land 980, Land 600, Land 200, Land 40, Sea, Sea, Sea, Sea ]</code></pre>
+<h1 id="measurement-above-land-1-point">Measurement above land (1 point)</h1>
+<p>Determine if a measurement was performed above land.</p>
+<pre class="haskell"><code>isLand :: Measure -&gt; Bool</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_isLand = 
+  [ isLand Sea       == False
+  , isLand (Land 40) == True
+  , isLand (Land 30) == True
+  ]</code></pre>
+<h1 id="measurement-above-sea-1-point">Measurement above sea (1 point)</h1>
+<p>Determine if there were any measurements at all above sea.</p>
+<pre class="haskell"><code>hasSea :: Measures -&gt; Bool</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_hasSea =
+  [ hasSea testMeasures1 == False
+  , hasSea testMeasures2 == True
+  , hasSea testMeasures3 == True
+  ]</code></pre>
+<h1 id="detecting-islands-2-points">Detecting islands (2 points)</h1>
+<p>Split the sea from the islands. Tip: use the <code>groupBy</code> function.</p>
+<pre class="haskell"><code>splitSegments :: Measures -&gt; [Measures]</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_splitSegments =
+  [ splitSegments testMeasures1 == ([] :: [Measures])
+  , splitSegments testMeasures2 == [ [Land 300,Land 200,Land 400]
+                                   , [Sea,Sea]
+                                   , [Land 300,Land 200,Land 150]
+                                   , [Sea]
+                                   , [Land 40,Land 80,Land 500,Land 650,Land 890,Land 300]
+                                   , [Sea,Sea,Sea,Sea]
+                                   , [Land 40]
+                                   ]
+  , splitSegments testMeasures3 == [ [Sea,Sea,Sea]
+                                   , [Land 50,Land 100,Land 10]
+                                   , [Sea]
+                                   , [Land 30,Land 80,Land 350,Land 700,Land 980,Land 600,Land 200,Land 40]
+                                   , [Sea,Sea,Sea,Sea]
+                                   ]
+  ]</code></pre>
+<h1 id="number-of-islands-2-points">Number of islands (2 points)</h1>
+<p>Determine the number of islands we encountered during the measurements.</p>
+<pre class="haskell"><code>islandCount :: Measures -&gt; Int</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_islandCount =
+  [ islandCount testMeasures1 == 0
+  , islandCount testMeasures2 == 4
+  , islandCount testMeasures3 == 2
+  ]</code></pre>
+<h1 id="length-of-land-segments-2-points">Length of land segments (2 points)</h1>
+<p>Determine the lengths of the segments above lands.</p>
+<pre class="haskell"><code>lengthOfIslands :: Measures -&gt; [Int]</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_lengthOfIslands =
+  [ lengthOfIslands testMeasures1 == ([] :: [Int])
+  , lengthOfIslands testMeasures2 == [3,3,6,1]
+  , lengthOfIslands testMeasures3 == [3,8]
+  ]</code></pre>
+<h1 id="islands-of-the-same-length-3-points">Islands of the same length (3 points)</h1>
+<p>Determine if there are two or more islands which have the same length. Tip: use the <code>group</code> function (among others).</p>
+<pre class="haskell"><code>hasIslandsOfSameLength :: Measures -&gt; Bool</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_hasIslandsOfSameLength =
+  [ hasIslandsOfSameLength testMeasures1 == False
+  , hasIslandsOfSameLength testMeasures2 == True
+  , hasIslandsOfSameLength testMeasures3 == False
+  ]</code></pre>
+<h1 id="the-island-with-the-highest-peak-5-points">The island with the highest peak (5 points)</h1>
+<p>Determine the number of the island which has the highest peak. If there are no islands, return <code>Nothing</code>. The islands are numbered from <code>0</code>. If there are more islands with a highest peak (of the same height), return the number of the first one.</p>
+<pre class="haskell"><code>highestIsland :: Measures -&gt; Maybe Int</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_highestIsland = 
+  [ highestIsland testMeasures1 == (Nothing :: Maybe Int)
+  , highestIsland testMeasures2 == Just 2
+  , highestIsland testMeasures3 == Just 1
+  ]</code></pre>
+<h1 id="length-of-the-longest-side-of-a-right-angled-triangle-1-point">Length of the longest side of a right-angled triangle (1 point)</h1>
+<p>Knowing the two shorter sides of a right-angled triangle (a triangle 
+which has a 90-degree angle), calculate the length of the longest side 
+(called hypotenuse). If the two shorter sides are denoted <span class="math inline"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.43056em;"></span><span class="strut bottom" style="height: 0.43056em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">a</span></span></span></span></span> and <span class="math inline"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.69444em;"></span><span class="strut bottom" style="height: 0.69444em; vertical-align: 0em;"></span><span class="base textstyle uncramped"><span class="mord mathit">b</span></span></span></span></span>, the length of the hypotenuse can be calculated by the following formula.</p>
+<p><span class="math inline"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msqrt><mrow><mo>(</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>)</mo></mrow></msqrt></mrow><annotation encoding="application/x-tex">\sqrt{(a^2 + b^2)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.935005em;"></span><span class="strut bottom" style="height: 1.24001em; vertical-align: -0.305005em;"></span><span class="base textstyle uncramped"><span class="sqrt mord"><span class="sqrt-sign" style="top: -0.045005em;"><span class="style-wrap reset-textstyle textstyle uncramped"><span class="delimsizing size1">√</span></span></span><span class="vlist"><span class="" style="top: 0em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 1em;">​</span></span><span class="mord textstyle cramped"><span class="mopen">(</span><span class="mord"><span class="mord mathit">a</span><span class="vlist"><span class="" style="top: -0.289em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span><span class="mbin">+</span><span class="mord"><span class="mord mathit">b</span><span class="vlist"><span class="" style="top: -0.289em; margin-right: 0.05em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span><span class="reset-textstyle scriptstyle cramped"><span class="mord mathrm">2</span></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 0em;">​</span></span>​</span></span></span><span class="mclose">)</span></span></span><span class="" style="top: -0.855005em;"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 1em;">​</span></span><span class="reset-textstyle textstyle uncramped sqrt-line"></span></span><span class="baseline-fix"><span class="fontsize-ensurer reset-size5 size5"><span class="" style="font-size: 1em;">​</span></span>​</span></span></span></span></span></span></span></p>
+<p>The result should be rounded to the closest integer.</p>
+<pre class="haskell"><code>hypotenuse :: Int -&gt; Int -&gt; Int</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_hypotenuse =
+  [ hypotenuse 500 0   == 500
+  , hypotenuse 500 30  == 501
+  , hypotenuse 130 350 == 373
+  ]</code></pre>
+<h1 id="distance-between-neighbouring-measurements-2-points">Distance between neighbouring measurements (2 points)</h1>
+<p>Calculate the walking distance between two measurements. The first 
+parameter is the distance between the two measurement points if we don't
+ take the height into account. This is one of the shorter sides of a 
+right-angled triangle. The other shorter side is the vertical distance 
+between the two points. <code>walkingDistance</code> calculates the 
+hypotenuse of this triangle, that is, how many meters one needs to walk 
+if she starts in one measurement point and walks to the other.</p>
+<pre class="haskell"><code>walkingDistance :: Int -&gt; Measure -&gt; Measure -&gt; Int</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_walkingDistance =
+  [ walkingDistance 500 Sea Sea               == 500
+  , walkingDistance 500 Sea (Land 100)        == 510
+  , walkingDistance 500 (Land 100) (Land 660) == 751
+  ]</code></pre>
+<h1 id="distance-of-full-walk-3-points">Distance of full walk (3 points)</h1>
+<p><code>fullWalkingDistance</code> calculates the length of the full 
+walk. In this case the distance between the different measurements is 
+always the same, this value is the first parameter of the function.</p>
+<pre class="haskell"><code>fullWalkingDistance :: Int -&gt; Measures -&gt; Int</code></pre>
+<p>Test cases:</p>
+<pre class="haskell"><code>test_fullWalkingDistance =
+  [ fullWalkingDistance 500 testMeasures1 == 0
+  , fullWalkingDistance 500 testMeasures2 == 10398
+  , fullWalkingDistance 500 testMeasures3 == 9561
+  ]</code></pre></div></div></div><div class="row"><div class="col-md-12"><hr></div></div></div></body></html>
